@@ -1,0 +1,20 @@
+<pagewrapper>
+	<h4 class="dottest-title">Выберите сервисы</h4>
+	<hr/>
+		<table style="margin: 20px auto; width: auto">
+			<thead>
+				<tr><th></th><th>Сервис</th></tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="itm in $ctrl.services">
+					<td style="width: 80px; text-align: center"><input type="checkbox" ng-model="$ctrl.selectedIds[itm.id]" ng-change="$ctrl.refreshIds()" id="service_{{itm.id}}"/><label for="service_{{itm.id}}"></label></td>
+					<td style="width: 200px">{{itm.label}}</td>
+				</tr>
+			</tbody>
+		</table>
+	<hr/>
+
+	<div class="centered">
+		<button class="button large dottest-btn" style="margin-top: 10px; margin-bottom: 10px;" ng-disabled="$ctrl.noIdsSelected" ng-click="$ctrl.toDetails()">Далее</button>
+	</div>
+</pagewrapper>

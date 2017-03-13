@@ -1,0 +1,12 @@
+<wrapper>
+	<tabs tabs="$ctrl.services">
+		<!--ng-show будет внутри таба-->
+		<onetab ng-repeat="itm in $ctrl.services" tab="itm"></onetab>
+	</tabs>
+
+	<hr/>
+
+	<div class="centered">
+		<button class="button large dottest-btn" style="margin-top: 10px; margin-bottom: 10px;" ng-click="$ctrl.toList()">К списку</button>
+	</div>
+</wrapper>

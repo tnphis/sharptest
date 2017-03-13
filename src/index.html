@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="/app/lib/bootstrap/dist/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="/app/lib/bootstrap/dist/css/bootstrap-theme.min.css"></link>
+		<link rel="stylesheet" href="/app/lib/angular-ui-select/dist/select.min.css"></link>
+		<link rel="stylesheet" href="/app/lib/datatables.net-bs/css/dataTables.bootstrap.css"></link>
+		<link rel="stylesheet" href="/app/css/app.css"></link>
+	</head>
+
+	<body>
+		<script data-main="app/js/main.js?v=0.1" src="app/lib/require.js"></script>
+
+		<div class="sharptest-main">
+			<div class="container">
+				<div ng-module='mainapp' ng-strict-di>
+					<ui-view></ui-view>
+				</div>
+			</div>
+		</div>
+
+		<div class="sharptest-footer">
+			<h4><i>Parrot Wings</hr></i>
+		</div>
+
+	</body>
+</html>
