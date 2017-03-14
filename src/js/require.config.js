@@ -6,10 +6,11 @@ require.config({
 		'bootstrap': '/app/lib/bootstrap/dist/js/bootstrap.min',
 		'underscore': '/app/lib/underscore/underscore-min',
 		'datatables.net': '/app/lib/datatables.net/js/jquery.dataTables.min',
-		'datatables.net-bs': '/app/lib/datatables.net/js/dataTables.bootstrap.min',
+		'datatables.net-bs': '/app/lib/datatables.net-bs/js/dataTables.bootstrap.min',
 		'angular-ui-select': '/app/lib/angular-ui-select/dist/select.min',
 		'angular-sanitize': '/app/lib/angular-sanitize/angular-sanitize.min',
-		'angular-resource': '/app/lib/angular-resource/angular-resource.min'
+		'angular-resource': '/app/lib/angular-resource/angular-resource.min',
+		'angular-cookies': '/app/lib/angular-cookies/angular-cookies.min'
 	},
 	shim: {
 		'angular': {
@@ -26,6 +27,10 @@ require.config({
 		},
 		'angular-resource': {
 			exports: 'angular-resource',
+			deps: ['angular']
+		},
+		'angular-cookies': {
+			exports: 'angular-cookies',
 			deps: ['angular']
 		}
 	},

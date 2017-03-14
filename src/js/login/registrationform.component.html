@@ -1,32 +1,35 @@
-<form id="registration_form" ng-submit="register_user">
+<form id="registration_form" ng-submit="rf.register_user()">
 	<label for="reg_username">Name</label>
 	<div class="input-group">
-		<span class="input-group-addon">@</span>
-		<input type="text" class="form-control" id="reg_username" required placeholder="Name">
+		<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+		<input type="text" class="form-control" id="reg_username" ng-model="rf.params.username" required placeholder="Name">
 	</div>
 	<br>
 	<label for="reg_email">E-mail</label>
 	<div class="input-group">
 		<span class="input-group-addon">@</span>
-		<input type="email" class="form-control" id="reg_email" required placeholder="E-mail">
+		<input type="email" class="form-control" id="reg_email" ng-model="rf.params.email" required placeholder="E-mail">
 	</div>
 	<br>
 	<label for="reg_password">Password</label>
 	<div class="input-group">
 		<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-		<input type="password" class="form-control" id="reg_password" required placeholder="Password">
+		<input type="password" class="form-control" id="reg_password" ng-model="rf.params.password" required placeholder="Password">
 	</div>
 	<br>
 	<label for="reg_password_confirm">Confirm password</label>
 	<div class="input-group">
-		<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-		<input type="password" class="form-control" id="reg_password_confirm" required placeholder="Password">
+		<span class="input-group-addon"><span class="glyphicon glyphicon-ok"></span></span>
+		<input type="password" class="form-control" id="reg_password_confirm" ng-model="rf.password_confirm" required placeholder="Confirm password">
 	</div>
 	<br>
 	<div style="text-align: center; width: 100%">
-		<button type="submit" class="btn btn-primary" ng-disabled="rf.registrationInProcess" style="width: 120px">Register</button>
+		<button type="submit" class="btn btn-primary" ng-disabled="rf.registrationInProgress" style="width: 120px">
+			<span ng-show="!rf.registrationInProgress">Register</span>
+			<span ng-show="rf.registrationInProgress">Registering user...</span>
+		</button>
 	</div>
 </form>
 
-<div class="alert alert-warning" ng-show="rf.error"></div>
-<div class="alert alert-success" ng-show="rf.success"></div>
+<div class="alert alert-warning" ng-show="rf.error">{{rf.errorText}}</div>
+<div class="alert alert-success" ng-show="rf.success">Registration successful. Please use the login form to sign in with your new credentials.</div>
