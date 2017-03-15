@@ -1,7 +1,16 @@
 <appheader></appheader>
 <sessionchecker></sessionchecker>
-<a ui-sref="wizard" class="btn btn-primary">Create a new transaction</a>
-<hr/>
-<h4>Transaction history</h4>
-<br/>
-<datatable params="main.dtparams"></datatable>
+
+<tabs tabs="main.tabs">
+	<onetab tab="main.tabs[0]">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<datatable params="main.dtparams"></datatable>
+			</div>
+		</div>
+	</onetab>
+
+	<onetab tab="main.tabs[1]">
+		<transactionwiz></transactionwiz>
+	</onetab>
+</tabs>

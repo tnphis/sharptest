@@ -7,6 +7,13 @@ define(['angular', 'angular-cookies'], function(angular) {
 					params: {},
 					isArray: false
 				}
+			}),
+			get_users_list: $resource(Global.apiurl + '/api/protected/users/list', {}, {
+				query: {
+					method: 'POST',
+					params: {},
+					isArray: true
+				}
 			})
 		}
 	}

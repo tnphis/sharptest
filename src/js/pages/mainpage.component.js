@@ -7,6 +7,13 @@ define(['angular'], function(angular) {
 			controller: /* @ngInject */ function(transactionsDataService) {
 				var self = this
 
+				self.tabs = [{
+					id: 0,
+					label: 'Transaction history'
+				}, {
+					id: 1,
+					label: 'New transaction'
+				}]
 				self.dtparams = {
 					dataService: transactionsDataService,
 					dataSource: 'trans_token',
@@ -14,13 +21,17 @@ define(['angular'], function(angular) {
 						columns: [{
 							visible: false
 						},{
-							title: 'Date'
+							title: 'Date',
+							width: '25%'
 						}, {
-							title: 'Name'
+							title: 'Name',
+							width: '25%'
 						}, {
-							title: 'Amount'
+							title: 'Amount',
+							width: '25%'
 						}, {
-							title: 'Balance'
+							title: 'Balance',
+							width: '25%'
 						}]
 					}
 				}

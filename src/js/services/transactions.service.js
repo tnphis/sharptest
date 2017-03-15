@@ -5,6 +5,11 @@ define(['angular', 'angular-cookies'], function(angular) {
 				method: 'GET',
 				params: {},
 				isArray: true
+			},
+			create: {
+				method: 'POST',
+				params: {},
+				isArray: false
 			}
 		})
 	}

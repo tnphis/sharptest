@@ -9,9 +9,12 @@ define([
 		'login/loginform.component',
 		'login/registrationform.component',
 		'pages/mainpage.component',
+		'pages/transactionwiz.component',
 		'elements/appheader.component',
 		'elements/sessionchecker.component',
 		'elements/datatable.component',
+		'tabs/tabs.component',
+		'tabs/onetab.component',
 		'services/auth.service',
 		'services/util.service',
 		'services/transactions.service',
@@ -27,9 +30,12 @@ define([
 			loginformComponent,
 			registrationformComponent,
 			mainpageComponent,
+			transactionwizComponent,
 			appheaderComponent,
 			sessioncheckerComponent,
 			datatableComponent,
+			tabsComponent,
+			onetabComponent,
 			authService,
 			utilService,
 			transactionsService,
@@ -42,9 +48,12 @@ define([
 				.component(loginformComponent.name, loginformComponent.config)
 				.component(registrationformComponent.name, registrationformComponent.config)
 				.component(mainpageComponent.name, mainpageComponent.config)
+				.component(transactionwizComponent.name, transactionwizComponent.config)
 				.component(appheaderComponent.name, appheaderComponent.config)
 				.component(sessioncheckerComponent.name, sessioncheckerComponent.config)
 				.component(datatableComponent.name, datatableComponent.config)
+				.component(tabsComponent.name, tabsComponent.config)
+				.component(onetabComponent.name, onetabComponent.config)
 				.factory(authService.name, authService.config)
 				.factory(utilService.name, utilService.config)
 				.factory(transactionsService.name, transactionsService.config)

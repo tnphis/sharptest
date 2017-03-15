@@ -1,4 +1,4 @@
-define(['angular', 'jquery', 'datatables.net', 'datatables.net-bs'], function(angular, jQuery, datatables, datatablesbs) {
+define(['angular', 'datatables.net', 'datatables.net-bs', 'datatables.net-buttons'], function() {
 	return {
 		name: 'datatable',
 		config: {
@@ -15,10 +15,27 @@ define(['angular', 'jquery', 'datatables.net', 'datatables.net-bs'], function(an
 				$scope.$watch('dt.params', function(newval) {
 					if (newval && !self.tabledrawn) {
 						var dtparams = self.params.dtsettings || {} //one way binding, no worries
+
+						dtparams.ajax = customAjax
+						dtparams.buttons = self.params.dtsettings.buttons || []
+						dtparams.dom = self.params.dtsettings.dom || customDom()
 						dtparams.language = {
 							zeroRecords: '...'
 						}
-						dtparams.ajax = function(data, callback, settings) {
+
+						dtparams.buttons.push({
+							text: 'Refresh',
+							className: 'btn btn-default btn-sm pull-right',
+							action: function ( e, dt, node, config ) {
+								dt.ajax.reload();
+							}
+						})
+
+
+						$element.find('#maintable').DataTable(dtparams)
+						self.tabledrawn = true
+
+						function customAjax(data, callback, settings) {
 							//potentially expandable with urlparams
 							var ajaxParams = self.params.ajaxParams || {}
 							var data = self.params.dataService.query(ajaxParams, function(successResp) {
@@ -32,8 +49,13 @@ define(['angular', 'jquery', 'datatables.net', 'datatables.net-bs'], function(an
 							})
 						}
 
-						$element.find('#maintable').DataTable(dtparams)
-						self.tabledrawn = true
+						function customDom() {
+							var dom = '<"row sharptest-mb"<"col-sm-6"l><"col-sm-5"f><"col-sm-1"B>>'
+							dom += '<"row"<"col-sm-12"tr>>'
+							dom += '<"row"<"col-sm-5"i><"col-sm-7"p>>'
+
+							return dom
+						}
 					}
 				})
 			}

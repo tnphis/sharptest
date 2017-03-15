@@ -1,0 +1,9 @@
+<div>
+	<ul class="nav nav-pills">
+		<li role="presentation" ng-repeat="itm in $ctrl.tabs" ng-click="$ctrl.setActiveTab(itm.id)" ng-class="$ctrl.getActiveClass(itm.active)" class="button dottest-btn dottest-tab">
+			<a class="sharptest-tab">{{itm.label}}</a>
+		</li>
+	</ul>
+	<hr/>
+	<ng-transclude></ng-transclude>
+</div>

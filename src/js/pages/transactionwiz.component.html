@@ -1,12 +1,41 @@
-<wrapper>
-	<tabs tabs="$ctrl.services">
-		<!--ng-show будет внутри таба-->
-		<onetab ng-repeat="itm in $ctrl.services" tab="itm"></onetab>
-	</tabs>
-
-	<hr/>
-
-	<div class="centered">
-		<button class="button large dottest-btn" style="margin-top: 10px; margin-bottom: 10px;" ng-click="$ctrl.toList()">К списку</button>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div ng-show="tw.action == 'edit'">
+			<div class="row">
+				<div class="col-sm-2">
+					<label for="username">Recipient</label>
+				</div>
+				<div class="col-sm-10">
+					<ui-select title="Type the recipient's name" ng-model="tw.selected_name.selected" id="username" style="width: 300px">
+						<ui-select-match placeholder="Type the recipient's name">
+							{{$select.selected.name}}
+						</ui-select-match>
+						<ui-select-choices repeat="itm in tw.select_options" refresh="tw.name_filter($select.search)" minimum-input-length=1>
+							<div ng-bind-html="itm.name | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-sm-2">
+					<label for="amount">Amount</label>
+				</div>
+				<div class="col-sm-10">
+					<div class="input-group" style="max-width: 300px">
+						<input type="number" class="form-control" max="{{tw.current_balance}}"></input>
+						<span class="input-group-addon">PW</span>
+					</div>
+				</div>
+			</div>
+			<hr/>
+			<div class="row">
+				<div class="col-sm-12">
+					<button class="btn btn-default">Review</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="tw.action == 'review'">
+		</div>
 	</div>
-</wrapper>
+</div>

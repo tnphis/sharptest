@@ -7,6 +7,7 @@ require.config({
 		'underscore': '/app/lib/underscore/underscore-min',
 		'datatables.net': '/app/lib/datatables.net/js/jquery.dataTables.min',
 		'datatables.net-bs': '/app/lib/datatables.net-bs/js/dataTables.bootstrap.min',
+		'datatables.net-buttons': '/app/lib/datatables.net-buttons/js/dataTables.buttons.min',
 		'angular-ui-select': '/app/lib/angular-ui-select/dist/select.min',
 		'angular-sanitize': '/app/lib/angular-sanitize/angular-sanitize.min',
 		'angular-resource': '/app/lib/angular-resource/angular-resource.min',

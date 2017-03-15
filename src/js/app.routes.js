@@ -18,16 +18,9 @@ define(['angular', 'underscore', 'app.config'], function (angular, _, appconf) {
 				component: 'mainpage'
 			}
 
-			var wizard = {
-				name: 'wizard',
-				url: '/client/wizard',
-				component: 'transactionwiz'
-			}
-
 			//state config
-			$stateProvider.state(loginpage);
-			$stateProvider.state(mainpage);
-			$stateProvider.state(wizard);
+			$stateProvider.state(loginpage)
+			$stateProvider.state(mainpage)
 
 			//interceptors
 			$httpProvider.interceptors.push('sessioncheckerInterceptor')
