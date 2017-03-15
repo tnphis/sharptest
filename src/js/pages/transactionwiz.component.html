@@ -1,6 +1,28 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div ng-show="tw.action == 'edit'">
+			<div class="alert alert-info">
+				Select the recipient and the amount to transfer. <br>
+				You may also choose a previous transaction to use as a template for the current one using the "Template" field. <br>
+				Keep in mind that the amount must not be higher than your current balance. You will not be able to continue if it does.
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<label for="template">Template</label>
+				</div>
+				<div class="col-sm-10">
+					<ui-select title="Choose a previous transaction" ng-model="tw.selected_template.selected" id="template" style="width: 300px">
+						<ui-select-match placeholder="Choose a previous transaction">
+							<b>User:</b> {{$select.selected.username}} <b>Amount:</b> {{$select.selected.amount}}PW
+						</ui-select-match>
+						<ui-select-choices repeat="itm in tw.template_select_options | filter: $select.search" refresh="tw.template_filter()" minimum-input-length=0>
+							<div ng-bind-html="itm.date | highlight: $select.search"></div>
+							<div style="border-bottom: 1px solid #eee" ng-bind-html="'<b>User:</b> ' + itm.username + ' ' + '<b>Amount: </b>' + itm.amount + 'PW' | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+			<br>
 			<div class="row">
 				<div class="col-sm-2">
 					<label for="username">Recipient</label>
@@ -10,7 +32,7 @@
 						<ui-select-match placeholder="Type the recipient's name">
 							{{$select.selected.name}}
 						</ui-select-match>
-						<ui-select-choices repeat="itm in tw.select_options" refresh="tw.name_filter($select.search)" minimum-input-length=1>
+						<ui-select-choices repeat="itm in tw.name_select_options" refresh="tw.name_filter($select.search)" minimum-input-length=1>
 							<div ng-bind-html="itm.name | highlight: $select.search"></div>
 						</ui-select-choices>
 					</ui-select>
@@ -23,7 +45,7 @@
 				</div>
 				<div class="col-sm-10">
 					<div class="input-group" style="max-width: 300px">
-						<input type="number" class="form-control" max="{{tw.current_balance}}"></input>
+						<input type="number" class="form-control" min=0 max="{{tw.current_balance}}" ng-model="tw.params.amount"></input>
 						<span class="input-group-addon">PW</span>
 					</div>
 				</div>
@@ -31,11 +53,55 @@
 			<hr/>
 			<div class="row">
 				<div class="col-sm-12">
-					<button class="btn btn-default">Review</div>
+					<button class="btn btn-default" ng-disabled="tw.disable_review" ng-click="tw.setAction('review')">Review</button>
 				</div>
 			</div>
 		</div>
 		<div ng-show="tw.action == 'review'">
+			<div class="alert alert-info">
+				Please review your transaction before confirming. <br>
+				Once it is finalized, it will become irreversible.
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<label>Recipient</label>
+				</div>
+				<div class="col-sm-10">
+					<span>{{tw.selected_name.selected.name}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<label>Amount</label>
+				</div>
+				<div class="col-sm-10">
+					<span>{{tw.params.amount}} PW</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					<label>Resulting balance</label>
+				</div>
+				<div class="col-sm-10">
+					<span>{{tw.current_balance - tw.params.amount}} PW</span>
+				</div>
+			</div>
+			<hr/>
+			<div class="row">
+				<div class="col-sm-12">
+					<button class="btn btn-default" ng-show="!tw.transaction_confirmed" ng-click="tw.setAction('edit')">Back to editing</button>
+					<button class="btn btn-primary" ng-show="!tw.transaction_confirmed" ng-click="tw.confirmTransaction()">Confirm transaction</button>
+					<button class="btn btn-default" ng-show="tw.transaction_confirmed" ng-click="tw.newTransaction()">Create another transaction</button>
+				</div>
+			</div>
+			<br>
+			<div class="alert alert-success" ng-show="tw.transaction_confirmed">
+				Transaction complete. <br>
+				You may now review your history or create another transaction using the button above.
+			</div>
+			<div class="alert alert-warning" ng-show="tw.error">
+				{{tw.error_text}}
+			</div>
 		</div>
 	</div>
 </div>

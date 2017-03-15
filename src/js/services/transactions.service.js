@@ -4,7 +4,7 @@ define(['angular', 'angular-cookies'], function(angular) {
 			query: {
 				method: 'GET',
 				params: {},
-				isArray: true
+				isArray: false
 			},
 			create: {
 				method: 'POST',

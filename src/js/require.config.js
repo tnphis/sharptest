@@ -19,19 +19,15 @@ require.config({
 			deps: ['jquery'] //обязательно для корректной работы $element.find
 		},
 		'angular-ui-select': {
-			exports: 'angular-ui-select',
 			deps: ['angular']
 		},
 		'angular-sanitize': {
-			exports: 'angular-sanitize',
 			deps: ['angular']
 		},
 		'angular-resource': {
-			exports: 'angular-resource',
 			deps: ['angular']
 		},
 		'angular-cookies': {
-			exports: 'angular-cookies',
 			deps: ['angular']
 		}
 	},

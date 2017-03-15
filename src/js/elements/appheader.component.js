@@ -9,7 +9,7 @@ define(['angular', 'angular-cookies'], function(angular, ngcookies) {
 				self.logout = logout
 				self.userdata = {}
 
-				$rootScope.$on('balance_update', function() {
+				$rootScope.$on('transaction_confirmed', function() {
 					refresh()
 				})
 

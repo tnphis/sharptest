@@ -1,10 +1,10 @@
-define(['angular'], function(angular) {
+define(['angular', 'underscore'], function(angular, _) {
 	return {
 		name: 'mainpage',
 		config: {
 			templateUrl: 'app/js/pages/mainpage.component.html',
 			controllerAs: 'main',
-			controller: /* @ngInject */ function(transactionsDataService) {
+			controller: /* @ngInject */ function($rootScope, transactionsDataService) {
 				var self = this
 
 				self.tabs = [{
@@ -12,28 +12,47 @@ define(['angular'], function(angular) {
 					label: 'Transaction history'
 				}, {
 					id: 1,
-					label: 'New transaction'
+					label: 'Transaction editor'
 				}]
 				self.dtparams = {
+					id: 'maintable',
 					dataService: transactionsDataService,
 					dataSource: 'trans_token',
+					dataTransform: prepareData,
 					dtsettings: {
 						columns: [{
-							visible: false
-						},{
 							title: 'Date',
-							width: '25%'
+							width: '40%',
+							data: 'date',
+							type: 'date'
 						}, {
-							title: 'Name',
-							width: '25%'
+							title: 'Recipient',
+							width: '40%',
+							data: 'username'
 						}, {
 							title: 'Amount',
-							width: '25%'
+							width: '20%',
+							data: 'amount'
 						}, {
 							title: 'Balance',
-							width: '25%'
-						}]
+							width: '20%',
+							data: 'balance'
+						}],
+						"order": [[ 0, "desc" ]]
 					}
+				}
+
+				//since components use isolated scopes only, we need to communicate to the component though the rootscope
+				$rootScope.$on('transaction_confirmed', function() {
+					self.dtparams.refresh()
+				})
+
+				function prepareData(data) {
+					var transdata = _.map(data, function(obj) {
+						obj.amount = -obj.amount
+						return obj
+					})
+					return transdata
 				}
 			}
 		}

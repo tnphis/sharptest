@@ -1,5 +1,5 @@
 define(['angular', 'angular-cookies'], function(angular, ngcookies) {
-	var service = /* ngInject */ function($q, $rootScope, $cookies) {
+	var service = /* @ngInject */ function($q, $rootScope, $cookies) {
 		return {
 			request: requestIntercept,
 			responseError: responseErrorIntercept
@@ -23,8 +23,8 @@ define(['angular', 'angular-cookies'], function(angular, ngcookies) {
 				$rootScope.session_expired = true
 				//it is possible to check for the cookie existence (as opposed to validity)
 				//here and redirect the user to the login page, if desired
-				return $q.reject(errorResp)
 			}
+			return $q.reject(errorResp)
 		}
 	}
 

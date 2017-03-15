@@ -7,24 +7,73 @@ define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 			controller: /* @ngInject */ function($scope, $rootScope, transactionsDataService, utilDataService) {
 				//Considered making or using pre-made wizard component for this
 				//but it's too simple and specific for this, plus scope needs to be shared.
-				//Maybe next time.
+				//Maybe next time. It did turn out to be a bit large.
 				var self = this
 
 				self.action = 'edit' //initial action for a new transaction
+				self.confirmTransaction = confirmTransaction
+				self.disable_review = true
 				self.name_filter = nameFilterQuery
+				self.newTransaction = newTransaction
 				self.params = {}
 				self.name_select_options = []
 				self.selected_name = {}
-				self.transaction_select_options = []
-				self.transaction_filter = transactionFilterQuery
+				self.selected_template = {}
+				self.setAction = setAction
+				self.template_select_options = []
+				self.template_filter = templateFilterQuery
 
-				$rootScope.$watch('current_balance', function(newval, oldval) {
-					//We only need to set this at page refresh.
-					//Afterwards, the scope balance will be set manually.
-					if (newval && !oldval) {
+				$rootScope.$watch('current_balance', function(newval) {
+					//we don't want to update the review balance for completed transactions
+					if (newval && !self.transaction_confirmed) {
 						self.current_balance = newval
 					}
 				})
+
+				$scope.$watch('tw.selected_template.selected', function(newval) {
+					if (newval) {
+						self.selected_name.selected = {name: newval.username}
+						self.params.amount = - Number(newval.amount)
+					}
+				})
+
+				//for enabling the "Review" button
+				$scope.$watch('tw.selected_name.selected', validateInput)
+				$scope.$watch('tw.params.amount', validateInput)
+
+				function validateInput() {
+					if (self.params.amount && self.params.amount > 0 && self.params.amount <= self.current_balance && self.selected_name.selected) {
+						self.disable_review = false
+					} else {
+						self.disable_review = true
+					}
+				}
+
+				function confirmTransaction() {
+					self.params.name = self.selected_name.selected.name
+					transactionsDataService.create(self.params, function(successResp) {
+						self.transaction_confirmed = true
+						$rootScope.$broadcast('transaction_confirmed')
+					}, function(errorResp) {
+						if (errorResp.status == 400) {
+							self.error = true
+							if (errorResp.data == 'Invalid username') {
+								self.error_text = 'The user you selected no longer exists.'
+							}
+						}
+					})
+				}
+
+				function newTransaction() {
+					self.params = {}
+					self.selected_name = {}
+					self.selected_template = {}
+					self.current_balance = $rootScope.current_balance
+					self.transaction_confirmed = false
+					self.template_select_options = []
+					templateFilterQuery() //doesn't do that automatically...
+					setAction('edit')
+				}
 
 				function nameFilterQuery(search_string) {
 					utilDataService.get_users_list.query({filter: search_string}, function(successResponse) {
@@ -32,9 +81,16 @@ define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 					})
 				}
 
-				function transactionFilterQuery() {
-					transactionDataService.get_users_list.query({}, function(successResponse) {
-						self.transaction_select_options = successResponse
+				function setAction(action) {
+					self.action = action
+					if (action == 'edit') {
+						self.error = false
+					}
+				}
+
+				function templateFilterQuery() {
+					transactionsDataService.query({}, function(successResponse) {
+						self.template_select_options = successResponse.trans_token
 					})
 				}
 			}

@@ -5,16 +5,17 @@ define(['angular', 'datatables.net', 'datatables.net-bs', 'datatables.net-button
 			templateUrl: 'app/js/elements/datatable.component.html',
 			controllerAs: 'dt',
 			bindings: {
-				params: '<'
+				params: '=' //two-way binding for refreshing outside the component
 			},
 			controller: /* @ngInject */ function($scope, $element) {
 				var self = this
 
+				self.refresh = function() {}
 				self.tabledrawn = false
 
 				$scope.$watch('dt.params', function(newval) {
 					if (newval && !self.tabledrawn) {
-						var dtparams = self.params.dtsettings || {} //one way binding, no worries
+						var dtparams = self.params.dtsettings || {}
 
 						dtparams.ajax = customAjax
 						dtparams.buttons = self.params.dtsettings.buttons || []
@@ -31,21 +32,29 @@ define(['angular', 'datatables.net', 'datatables.net-bs', 'datatables.net-button
 							}
 						})
 
-
-						$element.find('#maintable').DataTable(dtparams)
+						self.dt = $element.find('#maintable').DataTable(dtparams)
+						self.params.refresh = self.dt.ajax.reload
 						self.tabledrawn = true
 
 						function customAjax(data, callback, settings) {
 							//potentially expandable with urlparams
 							var ajaxParams = self.params.ajaxParams || {}
-							var data = self.params.dataService.query(ajaxParams, function(successResp) {
+
+							self.params.dataService.query(ajaxParams, function(successResp) {
+								var rcvddata
 								if (self.params.dataSource) {
-									callback(successResp[self.params.dataSource])
+									rcvddata = successResp[self.params.dataSource]
 								} else {
-									callback(successResp)
+									rcvddata = successResp
 								}
+
+								if (self.params.dataTransform) {
+									rcvddata = self.params.dataTransform(rcvddata)
+								}
+
+								callback({data: rcvddata})
 							}, function(errorResp) {
-								callback([])
+								callback({data: []})
 							})
 						}
 

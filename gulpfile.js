@@ -10,9 +10,10 @@ gulp.task('buildlibs', function() {
 	//lots of manual configs here but every package has its own standards...
 	//only leave css and fonts for the minified build
 	gulp.src([
-		'bower_components/**/*.min.js',
-		'bower_components/**/*-min.js',
+		//'bower_components/**/*.min.js',
+		//'bower_components/**/*-min.js',
 		'bower_components/**/*.min.css',
+		'bower_components/**/*.png',
 		'bower_components/**/*.eot',
 		'bower_components/**/*.ttf',
 		'bower_components/**/*.svg',
@@ -38,7 +39,7 @@ gulp.task('buildcss', function() {
 gulp.task('buildjs', function() {
 	//uncomment annotation, minification and concatenation for the minified build
 	gulp.src(['src/js/**/*.js'], {base: 'src'})
-		/*.pipe(ngAnnotate({add: true}))
+		.pipe(ngAnnotate({add: true}))
 		.pipe(amdOptimize('main', {
 			baseUrl: 'src/js',
 			configFile: 'src/js/require.config.js',
@@ -49,11 +50,18 @@ gulp.task('buildjs', function() {
 				'angular': '../../bower_components/angular/angular.min',
 				'angular-ui-router': '../../bower_components/angular-ui-router/release/angular-ui-router.min',
 				'bootstrap': '../../bower_components/bootstrap/dist/js/bootstrap.min',
-				'underscore': '../../bower_components/underscore/underscore-min'
+				'underscore': '../../bower_components/underscore/underscore-min',
+				'datatables.net': '../../bower_components/datatables.net/js/jquery.dataTables.min',
+				'datatables.net-bs': '../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min',
+				'datatables.net-buttons': '../../bower_components/datatables.net-buttons/js/dataTables.buttons.min',
+				'angular-ui-select': '../../bower_components/angular-ui-select/dist/select.min',
+				'angular-sanitize': '../../bower_components/angular-sanitize/angular-sanitize.min',
+				'angular-resource': '../../bower_components/angular-resource/angular-resource.min',
+				'angular-cookies': '../../bower_components/angular-cookies/angular-cookies.min'
 			}
 		}))
 		.pipe(concat('js/main.js'))
-		.pipe(uglify({mangle: {except: ['Global']}}).on('error', gulpUtil.log))*/
+		.pipe(uglify({mangle: {except: ['Global']}}).on('error', gulpUtil.log))
 		.pipe(gulp.dest('build/app'))
 
 	gulp.src(['src/js/**/*.html'], {base: 'src'})
