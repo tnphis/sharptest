@@ -1,3 +1,4 @@
+//The registration form on the login page
 define(['angular'], function(angular) {
 	return {
 		name: 'registrationform',

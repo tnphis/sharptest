@@ -1,4 +1,4 @@
-define(['angular', 'underscore', 'app.config'], function (angular, _, appconf) {
+define(['angular', 'jquery', 'app.config'], function (angular, jQuery, appconf) {
 	"use strict";
 
 	var initialize = function() {
@@ -34,6 +34,7 @@ define(['angular', 'underscore', 'app.config'], function (angular, _, appconf) {
 		})
 
 		angular.bootstrap(window.document, ['mainapp'])
+		jQuery('#loadingIndicator').remove()
 	}
 
 	return {

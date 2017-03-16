@@ -1,5 +1,6 @@
+//A basic tabs component.
+//Probably there are better ones out there but I just had this one ready and it works.
 define(['angular'], function(angular) {
-
 	return {
 		name: 'onetab',
 		config: {
@@ -15,7 +16,6 @@ define(['angular'], function(angular) {
 				self.drawn = false
 
 				$scope.$watch('$ctrl.tab', redrawTabs)
-
 
 				function redrawTabs(newval, oldval) {
 					if (newval.active != oldval.active) {

@@ -1,4 +1,5 @@
-define(['angular', 'datatables.net', 'datatables.net-bs', 'datatables.net-buttons'], function() {
+//A basic jquery datatables-based component. There is one available as an angular library but it's a bit overbuilt for this small app.
+define(['angular', 'datatables.net', 'datatables.net-bs', 'datatables.net-buttons'], function(angular) {
 	return {
 		name: 'datatable',
 		config: {
@@ -41,12 +42,7 @@ define(['angular', 'datatables.net', 'datatables.net-bs', 'datatables.net-button
 							var ajaxParams = self.params.ajaxParams || {}
 
 							self.params.dataService.query(ajaxParams, function(successResp) {
-								var rcvddata
-								if (self.params.dataSource) {
-									rcvddata = successResp[self.params.dataSource]
-								} else {
-									rcvddata = successResp
-								}
+								var rcvddata = successResp
 
 								if (self.params.dataTransform) {
 									rcvddata = self.params.dataTransform(rcvddata)

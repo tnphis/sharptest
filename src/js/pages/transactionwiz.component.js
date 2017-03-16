@@ -1,3 +1,5 @@
+//Transaction creation is handled here.
+//The second page is unneccessary but probably improves the experience.
 define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 	return {
 		name: 'transactionwiz',
@@ -41,14 +43,6 @@ define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 				$scope.$watch('tw.selected_name.selected', validateInput)
 				$scope.$watch('tw.params.amount', validateInput)
 
-				function validateInput() {
-					if (self.params.amount && self.params.amount > 0 && self.params.amount <= self.current_balance && self.selected_name.selected) {
-						self.disable_review = false
-					} else {
-						self.disable_review = true
-					}
-				}
-
 				function confirmTransaction() {
 					self.params.name = self.selected_name.selected.name
 					transactionsDataService.create(self.params, function(successResp) {
@@ -59,8 +53,16 @@ define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 							self.error = true
 							if (errorResp.data == 'Invalid username') {
 								self.error_text = 'The user you selected no longer exists.'
+							} else {
+								self.error_text = errorResp.data
 							}
 						}
+					})
+				}
+
+				function nameFilterQuery(search_string) {
+					utilDataService.get_users_list.query({filter: search_string}, function(successResponse) {
+						self.name_select_options = successResponse
 					})
 				}
 
@@ -75,12 +77,6 @@ define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 					setAction('edit')
 				}
 
-				function nameFilterQuery(search_string) {
-					utilDataService.get_users_list.query({filter: search_string}, function(successResponse) {
-						self.name_select_options = successResponse
-					})
-				}
-
 				function setAction(action) {
 					self.action = action
 					if (action == 'edit') {
@@ -92,6 +88,14 @@ define(['angular', 'angular-ui-select'], function(angular, uiselect) {
 					transactionsDataService.query({}, function(successResponse) {
 						self.template_select_options = successResponse.trans_token
 					})
+				}
+
+				function validateInput() {
+					if (self.params.amount && self.params.amount > 0 && self.params.amount <= self.current_balance && self.selected_name.selected) {
+						self.disable_review = false
+					} else {
+						self.disable_review = true
+					}
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+//The single tab part of the tabs component
 define(['angular', 'underscore'], function(angular, _) {
 	return {
 		name: 'tabs',
@@ -13,7 +14,6 @@ define(['angular', 'underscore'], function(angular, _) {
 				self.setActiveTab = setActiveTab
 
 				$scope.$watch('$ctrl.tabs', initTabs)
-
 
 				function getActiveClass(val) {
 					if (val) {return 'active'} else {return ''}

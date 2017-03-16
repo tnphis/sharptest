@@ -1,4 +1,5 @@
-define(['angular', 'angular-cookies'], function(angular, ngcookies) {
+//The sign-in form on the login page
+define(['angular', 'angular-cookies'], function(angular) {
 	return {
 		name: 'loginform',
 		config: {

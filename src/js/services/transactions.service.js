@@ -1,4 +1,4 @@
-define(['angular', 'angular-cookies'], function(angular) {
+define(['angular'], function(angular) {
 	var service = /* @ngInject */ function($resource) {
 		return $resource(Global.apiurl + '/api/protected/transactions', {}, {
 			query: {

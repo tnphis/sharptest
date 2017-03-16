@@ -1,4 +1,4 @@
-define(['angular', 'angular-cookies'], function(angular) {
+define(['angular'], function(angular) {
 	var service = /* @ngInject */ function($resource) {
 		return {
 			get_user_info: $resource(Global.apiurl + '/api/protected/user-info', {}, {

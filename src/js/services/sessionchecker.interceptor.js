@@ -1,4 +1,4 @@
-define(['angular', 'angular-cookies'], function(angular, ngcookies) {
+define(['angular', 'angular-cookies'], function(angular) {
 	var service = /* @ngInject */ function($q, $rootScope, $cookies) {
 		return {
 			request: requestIntercept,

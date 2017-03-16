@@ -1,4 +1,4 @@
-define(['angular', 'angular-cookies'], function(angular, ngcookies) {
+define(['angular', 'angular-cookies'], function(angular) {
 	return {
 		name: 'appheader',
 		config: {

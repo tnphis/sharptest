@@ -1,3 +1,4 @@
+//Main page containing tabs with transaction history and transaction editor.
 define(['angular', 'underscore'], function(angular, _) {
 	return {
 		name: 'mainpage',
@@ -17,8 +18,7 @@ define(['angular', 'underscore'], function(angular, _) {
 				self.dtparams = {
 					id: 'maintable',
 					dataService: transactionsDataService,
-					dataSource: 'trans_token',
-					dataTransform: prepareData,
+					dataTransform: prepareData, //transform the server data into a datatables-compatible format
 					dtsettings: {
 						columns: [{
 							title: 'Date',
@@ -48,7 +48,7 @@ define(['angular', 'underscore'], function(angular, _) {
 				})
 
 				function prepareData(data) {
-					var transdata = _.map(data, function(obj) {
+					var transdata = _.map(data.trans_token, function(obj) {
 						obj.amount = -obj.amount
 						return obj
 					})
