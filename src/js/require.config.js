@@ -31,5 +31,5 @@ require.config({
 			deps: ['angular']
 		}
 	},
-	urlArgs: 'v=0.1'
+	urlArgs: 'v=0.11'
 })
